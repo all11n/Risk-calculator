@@ -1,2 +1,3 @@
 # Risk-calculator
 Веб‑сервис оценки риска сердечно‑сосудистых заболеваний с использованием XGBoost и MLflow
+Nodramar - Backend разработчик
