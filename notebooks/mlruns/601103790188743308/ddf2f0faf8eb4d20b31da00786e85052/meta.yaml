@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/n1kal1na/doc/Risk-calculator/notebooks/mlruns/601103790188743308/ddf2f0faf8eb4d20b31da00786e85052/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '601103790188743308'
+lifecycle_stage: active
+run_id: ddf2f0faf8eb4d20b31da00786e85052
+run_name: suave-mink-433
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1774253435392
+status: 1
+tags: []
+user_id: n1kal1na
