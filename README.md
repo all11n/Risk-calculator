@@ -46,44 +46,43 @@ pip install -r requirements.txt
 ### 4. Запуск MLflow (отслеживание экспериментов)
 ```bash
 mlflow ui --host 0.0.0.0 --port 5001
-MLflow UI будет доступен по адресу: http://127.0.0.1:5001
 ```
+MLflow UI будет доступен по адресу: http://127.0.0.1:5001
 ### 5. Запуск бэкенда
 ```bash
 cd backend
 python run.py
-Сервер запустится по адресу: http://127.0.0.1:5000
 ```
+Сервер запустится по адресу: http://127.0.0.1:5000
 ### 6. Запуск фронтенда
 Откройте файл frontend/index.html в браузере или запустите простой HTTP-сервер:
 
 ```bash
 cd frontend
 python -m http.server 8000
-Фронтенд будет доступен: http://127.0.0.1:8000
 ```
+Фронтенд будет доступен: http://127.0.0.1:8000
 ## Структура проекта
 
-text
 Risk-calculator/
-├── backend/                 # Flask-приложение
-│   ├── app/
-│   │   ├── api/            # Эндпоинты
-│   │   ├── models/         # Модели БД
-│   │   ├── services/       # Бизнес-логика
-│   │   └── utils/          # Вспомогательные функции
-│   ├── run.py
-│   └── requirements.txt
-├── frontend/               # HTML, CSS, JS
-│   ├── static/
-│   ├── templates/
-│   └── index.html
-├── ml_service/             # Модели ML
-│   ├── notebooks/          # Jupyter ноутбуки
-│   ├── models/             # Сохранённые модели
-│   ├── mlruns/             # MLflow эксперименты
-│   └── data/               # Датасеты
-├── docs/                   # Sphinx-документация
+├── backend/ # Flask-приложение
+│ ├── app/
+│ │ ├── api/ # Эндпоинты
+│ │ ├── models/ # Модели БД
+│ │ ├── services/ # Бизнес-логика
+│ │ └── utils/ # Вспомогательные функции
+│ ├── run.py
+│ └── requirements.txt
+├── frontend/ # HTML, CSS, JS
+│ ├── static/
+│ ├── templates/
+│ └── index.html
+├── ml_service/ # Модели ML
+│ ├── notebooks/ # Jupyter ноутбуки
+│ ├── models/ # Сохранённые модели
+│ ├── mlruns/ # MLflow эксперименты
+│ └── data/ # Датасеты
+├── docs/ # Sphinx-документация
 ├── requirements.txt
 ├── setup.py
 ├── .gitignore
