@@ -28,8 +28,8 @@
 Файл `requirements.txt`
 
 ## Запуск проекта
-1. Клонирование репозитория
-bash
+### 1. Клонирование репозитория
+```bash
 git clone https://github.com/ваш-username/Risk-calculator.git
 cd Risk-calculator
 2. Создание виртуального окружения
