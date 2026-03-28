@@ -9,19 +9,19 @@
 - Риск опухоли сердца
 Такой подход даёт более детальную картину здоровья пациента.
 
-## 🛠 Стек технологий
+## Стек технологий
 
 | Компонент | Технология |
 |-----------|-----------|
 | **Backend** | Python 3.9+, Flask, SQLAlchemy, Flask-JWT-Extended |
 | **Frontend** | HTML5, CSS3, JavaScript, Chart.js |
-| **Machine Learning** | Python, pandas, numpy, scikit-learn, CatBoost/XGBoost, **multi-label classification**, SHAP |
-| **MLOps / Эксперименты** | **MLflow** (отслеживание экспериментов, логирование моделей) |
+| **Machine Learning** | Python, pandas, numpy, scikit-learn, CatBoost/XGBoost, multi-label classification, SHAP |
+| **MLOps / Эксперименты** | MLflow (отслеживание экспериментов, логирование моделей) |
 | **База данных** | SQLite (разработка), PostgreSQL (продакшн) |
 | **Система сборки** | pip + requirements.txt, setuptools |
 | **Документация** | Sphinx (docstrings) |
 | **Контроль версий** | Git, GitHub |
 
-## 📦 Зависимости
+## Зависимости
 
 Файл `requirements.txt`:
