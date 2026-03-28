@@ -32,33 +32,36 @@
 ```bash
 git clone https://github.com/ваш-username/Risk-calculator.git
 cd Risk-calculator
+```
 ### 2. Создание виртуального окружения
 ```bash
 python -m venv venv
 source venv/bin/activate   # Linux/Mac
 # venv\Scripts\activate    # Windows
-3. Установка зависимостей
+```
+### 3. Установка зависимостей
 ```bash
 pip install -r requirements.txt
-4. Запуск MLflow (отслеживание экспериментов)
+```
+### 4. Запуск MLflow (отслеживание экспериментов)
 ```bash
 mlflow ui --host 0.0.0.0 --port 5001
 MLflow UI будет доступен по адресу: http://127.0.0.1:5001
-
-5. Запуск бэкенда
+```
+### 5. Запуск бэкенда
 ```bash
 cd backend
 python run.py
 Сервер запустится по адресу: http://127.0.0.1:5000
-
-6. Запуск фронтенда
+```
+### 6. Запуск фронтенда
 Откройте файл frontend/index.html в браузере или запустите простой HTTP-сервер:
 
 ```bash
 cd frontend
 python -m http.server 8000
 Фронтенд будет доступен: http://127.0.0.1:8000
-
+```
 ## Структура проекта
 
 text
