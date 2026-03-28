@@ -63,7 +63,7 @@ python -m http.server 8000
 ```
 Фронтенд будет доступен: http://127.0.0.1:8000
 ## Структура проекта
-'''test
+```test
 Risk-calculator/
 ├── backend/ # Flask-приложение
 │ ├── app/
@@ -87,7 +87,7 @@ Risk-calculator/
 ├── setup.py
 ├── .gitignore
 └── README.md
-'''
+```
 ## MLflow и многометочная классификация
 MLflow используется для:
 Логирования гиперпараметров моделей
