@@ -1,0 +1,16 @@
+creation_timestamp: 1774252926516
+current_stage: Production
+deployment_job_state: null
+description: null
+last_updated_timestamp: 1774252926536
+model_id: m-3acb6b2a7c4c45c0af04e27ff56cb83e
+name: CVD_XGBoost
+run_id: 584bd98ac5c2496eb70b88ac781c50d9
+run_link: null
+source: models:/m-3acb6b2a7c4c45c0af04e27ff56cb83e
+status: READY
+status_message: null
+storage_location: file:///Users/n1kal1na/doc/Risk-calculator/notebooks/mlruns/601103790188743308/models/m-3acb6b2a7c4c45c0af04e27ff56cb83e/artifacts
+user_id: null
+version: 1
+workspace: default
