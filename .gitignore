@@ -1,0 +1,27 @@
+# Виртуальное окружение
+venv/
+env/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Переменные окружения
+.env
+.env.local
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# База данных
+*.db
+*.sqlite
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
