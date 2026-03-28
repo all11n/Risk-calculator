@@ -60,6 +60,7 @@ python -m http.server 8000
 Фронтенд будет доступен: http://127.0.0.1:8000
 
 ## Структура проекта
+
 text
 Risk-calculator/
 ├── backend/                 # Flask-приложение
