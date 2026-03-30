@@ -29,3 +29,4 @@ mlartifacts/
 # Data (из ветки ds)
 /data/*
 mlflow.db
+.DS_Store
