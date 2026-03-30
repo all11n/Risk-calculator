@@ -19,7 +19,7 @@ python-multipart==0.0.6
 # Для HTTP запросов
 httpx==0.25.1
 
-# ML библиотеки (для модели Data Scientist"а)
+# ML библиотеки
 mlflow==2.8.0
 pandas==2.1.3
 numpy==1.24.3
