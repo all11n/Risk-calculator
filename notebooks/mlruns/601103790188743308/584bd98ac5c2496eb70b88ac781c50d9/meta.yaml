@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/n1kal1na/doc/Risk-calculator/notebooks/mlruns/601103790188743308/584bd98ac5c2496eb70b88ac781c50d9/artifacts
+end_time: 1774252926543
+entry_point_name: ''
+experiment_id: '601103790188743308'
+lifecycle_stage: active
+run_id: 584bd98ac5c2496eb70b88ac781c50d9
+run_name: MultiOutputClassifier
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1774252923993
+status: 3
+tags: []
+user_id: n1kal1na

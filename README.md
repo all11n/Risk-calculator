@@ -28,6 +28,16 @@
 Файл `requirements.txt`
 
 ## Запуск проекта
+### Способ 1: Через Docker
+
+``` bash 
+docker-compose up --build
+
+После запуска: 
+Backend API: http://localhost:8000/docs
+MLflow UI: http://localhost:5001
+
+### Способ 2: Вручную
 ### 1. Клонирование репозитория
 ```bash
 git clone https://github.com/ваш-username/Risk-calculator.git
@@ -68,11 +78,9 @@ Risk-calculator/
 ├── backend/ # Flask-приложение
 │ ├── app/
 │ │ ├── api/ # Эндпоинты
+│ │ ├── core/ # Ядро приложения
 │ │ ├── models/ # Модели БД
-│ │ ├── services/ # Бизнес-логика
-│ │ └── utils/ # Вспомогательные функции
-│ ├── run.py
-│ └── requirements.txt
+│ │ └── ml/ # ML модель
 ├── frontend/ # HTML, CSS, JS
 │ ├── static/
 │ ├── templates/
@@ -84,8 +92,11 @@ Risk-calculator/
 │ └── data/ # Датасеты
 ├── docs/ # Sphinx-документация
 ├── requirements.txt
+├── docker-compose.yml # Запуск всех сервисов
+├── Dockerfile # Сборка backend образа
 ├── setup.py
 ├── .gitignore
+├── .env.example # Пример переменных окружения
 └── README.md
 ```
 ## MLflow и многометочная классификация
@@ -101,4 +112,4 @@ MLflow используется для:
 Логирования SHAP-объяснений (важность признаков)
 
 Многометочная классификация
-В отличие от бинарной классификации (риск есть/нет), модель предсказывает несколько целевых меток одновременно:
+В отличие от бинарной классификации (риск есть/нет), модель предсказывает несколько целевых меток одновременно: main
