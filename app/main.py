@@ -42,3 +42,10 @@ async def startup_event():
 @app.on_event("shutdown")
 async def shutdown_event():
     print("Server shutting down...")
+
+def main():
+    import uvicorn
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+
+if __name__ == "__main__":
+    main()
