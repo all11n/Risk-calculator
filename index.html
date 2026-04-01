@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk-calculator | Оценка риска ССЗ</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1> Risk-calculator</h1>
+        <p>Введите ваши данные для расчёта 10-летнего риска сердечно-сосудистых заболеваний</p>
+
+        <div class="form-container">
+            <form id="riskForm">
+                <div class="row">
+                    <div class="col">
+                        <label>Возраст (лет):</label>
+                        <input type="number" id="age" value="50" min="30" max="74" step="1">
+                    </div>
+                    <div class="col">
+                        <label>Пол:</label>
+                        <select id="gender">
+                            <option value="male">Мужской</option>
+                            <option value="female">Женский</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <label>Холестерин (ммоль/л):</label>
+                        <input type="number" id="cholesterol" value="5.2" step="0.1" min="2" max="10">
+                    </div>
+                    <div class="col">
+                        <label>Давление (систолическое):</label>
+                        <input type="number" id="systolic" value="120" step="5" min="90" max="200">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <label>Курит:</label>
+                        <select id="smokes">
+                            <option value="false">Нет</option>
+                            <option value="true">Да</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label>Физическая активность:</label>
+                        <select id="activity">
+                            <option value="low">Низкая</option>
+                            <option value="medium" selected>Средняя</option>
+                            <option value="high">Высокая</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit">Рассчитать риск</button>
+            </form>
+        </div>
+
+        <div id="results" style="display: none;">
+            <h2>📊 Результаты оценки</h2>
+            
+            <div class="risk-score">
+                <span class="label">Общий 10-летний риск:</span>
+                <span class="value" id="totalRisk">0%</span>
+            </div>
+
+            <div class="charts">
+                <canvas id="riskChart" width="400" height="300"></canvas>
+                <canvas id="factorsChart" width="400" height="300"></canvas>
+            </div>
+
+            <div class="factors-list">
+                <h3> Факторы риска</h3>
+                <ul id="factorsUl"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="static/js/script.js"></script>
+</body>
+</html>
