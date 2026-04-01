@@ -30,3 +30,4 @@ mlartifacts/
 /data/*
 mlflow.db
 .DS_Store
+*.egg-info/
