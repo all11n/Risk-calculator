@@ -51,7 +51,7 @@ source venv/bin/activate   # Linux/Mac
 ```
 ### 3. Установка зависимостей
 ```bash
-pip install -r requirements.txt
+pip install -e .
 ```
 ### 4. Запуск MLflow (отслеживание экспериментов)
 ```bash
@@ -60,17 +60,13 @@ mlflow ui --host 0.0.0.0 --port 5001
 MLflow UI будет доступен по адресу: http://127.0.0.1:5001
 ### 5. Запуск бэкенда
 ```bash
-cd backend
-python run.py
+cvd-server
+# или
+uvicorn app.main:app --reload
 ```
 Сервер запустится по адресу: http://127.0.0.1:5000
 ### 6. Запуск фронтенда
-Откройте файл frontend/index.html в браузере или запустите простой HTTP-сервер:
-
-```bash
-cd frontend
-python -m http.server 8000
-```
+Откройте файл frontend/index.html в браузере или в новой вкладке терминала
 Фронтенд будет доступен: http://127.0.0.1:8000
 ## Структура проекта
 ```test
