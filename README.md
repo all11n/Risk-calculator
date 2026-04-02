@@ -45,7 +45,7 @@ cd Risk-calculator
 ```
 ### 2. Создание виртуального окружения
 ```bash
-python -m venv venv
+python3.11 -m venv venv
 source venv/bin/activate   # Linux/Mac
 # venv\Scripts\activate    # Windows
 ```
