@@ -2,41 +2,36 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('riskForm');
     const resultsDiv = document.getElementById('results');
-    
-    let riskChart = null;
-    let factorsChart = null;
 
-    // Обработка отправки формы
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // Собираем данные из формы
+        // Собираем данные в формате, который ждёт бэкенд
         const formData = {
             age: parseInt(document.getElementById('age').value),
-            gender: document.getElementById('gender').value,
+            sex: parseInt(document.getElementById('sex').value),
+            smoking: parseInt(document.getElementById('smoking').value),
             cholesterol: parseFloat(document.getElementById('cholesterol').value),
-            systolic: parseInt(document.getElementById('systolic').value),
-            smokes: document.getElementById('smokes').value === 'true',
-            activity: document.getElementById('activity').value
+            systolic_bp: parseInt(document.getElementById('systolic_bp').value),
+            diastolic_bp: parseInt(document.getElementById('diastolic_bp').value),
+            height: parseFloat(document.getElementById('height').value),
+            weight: parseFloat(document.getElementById('weight').value),
+            pulse: parseInt(document.getElementById('pulse').value),
+            glucose: parseFloat(document.getElementById('glucose').value),
+            diabetes: parseInt(document.getElementById('diabetes').value),
+            hypertension: parseInt(document.getElementById('hypertension').value)
         };
 
-        // Показываем индикатор загрузки
         const submitBtn = form.querySelector('button');
         const originalText = submitBtn.textContent;
         submitBtn.textContent = '⏳ Расчёт...';
         submitBtn.disabled = true;
 
         try {
-            // Имитация запроса к API (пока бэкенд не готов)
-            const response = await mockApiCall(formData);
-            
-            // Отображаем результаты
+            const response = await callBackend(formData);
             displayResults(response);
-            
-            // Показываем блок с результатами
             resultsDiv.style.display = 'block';
             resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            
         } catch (error) {
             console.error('Ошибка:', error);
             alert('Произошла ошибка при расчёте риска. Попробуйте позже.');
@@ -48,156 +43,98 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Имитация API-запроса (временная заглушка)
+ * Запрос к бэкенду
  */
-async function mockApiCall(data) {
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    const baseRisk = calculateMockRisk(data);
-    
-    return {
-        heart_attack_risk: Math.min(baseRisk * 1.2, 0.45),
-        stroke_risk: Math.min(baseRisk * 0.9, 0.45),
-        heart_failure_risk: Math.min(baseRisk * 1.1, 0.45),
-        factors: getFactorsList(data)
-    };
-}
+async function callBackend(data) {
+    const response = await fetch('http://localhost:8000/api/v1/predict', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
 
-/**
- * Мок-расчёт риска
- */
-function calculateMockRisk(data) {
-    let risk = 0.05;
-    
-    if (data.age > 50) risk += (data.age - 50) * 0.005;
-    if (data.gender === 'male') risk += 0.02;
-    if (data.cholesterol > 5.0) risk += (data.cholesterol - 5.0) * 0.03;
-    if (data.systolic > 130) risk += (data.systolic - 130) * 0.002;
-    if (data.smokes) risk += 0.05;
-    if (data.activity === 'low') risk += 0.03;
-    
-    return Math.min(risk, 0.45);
-}
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Ошибка сервера ${response.status}: ${errorText}`);
+    }
 
-/**
- * Получение списка факторов риска
- */
-function getFactorsList(data) {
-    const factors = [];
-    
-    if (data.smokes) factors.push('Курение');
-    if (data.age > 60) factors.push('Возраст (>60 лет)');
-    if (data.cholesterol > 6.0) factors.push('Высокий холестерин');
-    if (data.systolic > 140) factors.push('Повышенное давление');
-    if (data.activity === 'low') factors.push('Низкая физическая активность');
-    if (data.gender === 'male' && data.age > 45) factors.push('Мужской пол + возраст >45');
-    
-    if (factors.length === 0) factors.push('Основные показатели в норме');
-    
-    return factors;
+    return await response.json();
 }
 
 /**
  * Отображение результатов
  */
 function displayResults(data) {
-    const avgRisk = (data.heart_attack_risk + data.stroke_risk + data.heart_failure_risk) / 3;
-    const riskPercent = Math.round(avgRisk * 100);
+    // Общий риск
+    const riskPercent = data.risk_percentage;
+    const riskLevel = data.risk_level;
     
-    // Обновляем общий риск
     const totalRiskSpan = document.getElementById('totalRisk');
-    totalRiskSpan.textContent = `${riskPercent}%`;
+    totalRiskSpan.textContent = `${Math.round(riskPercent)}%`;
     
-    // Определяем класс цвета
+    // Цвет риска
     totalRiskSpan.classList.remove('low', 'medium', 'high');
-    if (riskPercent > 20) {
-        totalRiskSpan.classList.add('high');
-    } else if (riskPercent > 10) {
-        totalRiskSpan.classList.add('medium');
-    } else {
-        totalRiskSpan.classList.add('low');
-    }
+    if (riskPercent > 20) totalRiskSpan.classList.add('high');
+    else if (riskPercent > 10) totalRiskSpan.classList.add('medium');
+    else totalRiskSpan.classList.add('low');
     
-    // Обновляем список факторов
+    // Уровень риска
+    const riskLevelDiv = document.getElementById('riskLevel');
+    riskLevelDiv.textContent = `Уровень риска: ${riskLevel}`;
+    riskLevelDiv.className = `risk-level ${riskLevel.toLowerCase()}`;
+    
+    // Список факторов
     const factorsUl = document.getElementById('factorsUl');
     factorsUl.innerHTML = '';
-    data.factors.forEach(factor => {
-        const li = document.createElement('li');
-        li.textContent = factor;
-        factorsUl.appendChild(li);
-    });
+    if (data.factors && data.factors.length > 0) {
+        data.factors.forEach(factor => {
+            const li = document.createElement('li');
+            const impactSymbol = factor.impact === 'positive' ? '🔴' : '🟢';
+            li.innerHTML = `${impactSymbol} ${factor.name}: ${factor.value} (вклад: ${(factor.contribution * 100).toFixed(1)}%)`;
+            factorsUl.appendChild(li);
+        });
+    } else {
+        factorsUl.innerHTML = '<li>Нет значимых факторов</li>';
+    }
     
-    // Отрисовываем графики
-    drawRiskChart(data);
+    // Информация о предсказании
+    const predictionInfo = document.getElementById('predictionInfo');
+    if (data.prediction_id && data.timestamp) {
+        predictionInfo.innerHTML = `ID расчёта: ${data.prediction_id} | ${new Date(data.timestamp).toLocaleString()}`;
+    }
+    
+    // Рисуем круговую диаграмму факторов
     drawFactorsChart(data.factors);
 }
 
 /**
- * График рисков по заболеваниям
- */
-function drawRiskChart(data) {
-    const ctx = document.getElementById('riskChart').getContext('2d');
-    
-    // Удаляем старый график, если есть
-    if (window.riskChart) window.riskChart.destroy();
-    
-    window.riskChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Инфаркт', 'Инсульт', 'Сердечная недостаточность'],
-            datasets: [{
-                label: 'Риск (%)',
-                data: [
-                    Math.round(data.heart_attack_risk * 100),
-                    Math.round(data.stroke_risk * 100),
-                    Math.round(data.heart_failure_risk * 100)
-                ],
-                backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6'],
-                borderRadius: 8
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: { position: 'top' },
-                tooltip: { callbacks: { label: (ctx) => `${ctx.raw}%` } }
-            },
-            scales: {
-                y: { beginAtZero: true, max: 50, title: { display: true, text: 'Риск (%)' } }
-            }
-        }
-    });
-}
-
-/**
- * Круговая диаграмма факторов риска
+ * Круговая диаграмма вклада факторов
  */
 function drawFactorsChart(factors) {
     const ctx = document.getElementById('factorsChart').getContext('2d');
-    
     if (window.factorsChart) window.factorsChart.destroy();
     
-    // Считаем, сколько раз встречается каждый фактор (упрощённо)
-    const factorCount = {};
-    factors.forEach(f => { factorCount[f] = (factorCount[f] || 0) + 1; });
+    if (!factors || factors.length === 0) {
+        window.factorsChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: { labels: ['Нет данных'], datasets: [{ data: [1], backgroundColor: ['#9ca3af'] }] }
+        });
+        return;
+    }
+    
+    const labels = factors.map(f => f.name);
+    const contributions = factors.map(f => Math.abs(f.contribution));
+    const colors = factors.map(f => f.impact === 'positive' ? '#ef4444' : '#10b981');
     
     window.factorsChart = new Chart(ctx, {
         type: 'doughnut',
-        data: {
-            labels: Object.keys(factorCount),
-            datasets: [{
-                data: Object.values(factorCount),
-                backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6', '#10b981', '#8b5cf6'],
-                borderWidth: 0
-            }]
-        },
+        data: { labels: labels, datasets: [{ data: contributions, backgroundColor: colors, borderWidth: 0 }] },
         options: {
             responsive: true,
-            maintainAspectRatio: true,
             plugins: {
                 legend: { position: 'bottom' },
-                tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${ctx.raw} фактор(а)` } }
+                tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${(ctx.raw * 100).toFixed(1)}% вклада` } }
             }
         }
     });
