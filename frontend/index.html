@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <h1> Risk-calculator</h1>
+        <h1>❤️ Risk-calculator</h1>
         <p>Введите ваши данные для расчёта 10-летнего риска сердечно-сосудистых заболеваний</p>
 
         <div class="form-container">
@@ -17,43 +17,78 @@
                 <div class="row">
                     <div class="col">
                         <label>Возраст (лет):</label>
-                        <input type="number" id="age" value="50" min="30" max="74" step="1">
+                        <input type="number" id="age" value="45" min="18" max="100" step="1">
                     </div>
                     <div class="col">
                         <label>Пол:</label>
-                        <select id="gender">
-                            <option value="male">Мужской</option>
-                            <option value="female">Женский</option>
+                        <select id="sex">
+                            <option value="1">Мужской</option>
+                            <option value="0">Женский</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col">
-                        <label>Холестерин (ммоль/л):</label>
-                        <input type="number" id="cholesterol" value="5.2" step="0.1" min="2" max="10">
+                        <label>Курение:</label>
+                        <select id="smoking">
+                            <option value="0">Нет</option>
+                            <option value="1">Да</option>
+                        </select>
                     </div>
+                    <div class="col">
+                        <label>Диабет:</label>
+                        <select id="diabetes">
+                            <option value="0">Нет</option>
+                            <option value="1">Да</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <label>Гипертония:</label>
+                        <select id="hypertension">
+                            <option value="0">Нет</option>
+                            <option value="1">Да</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label>Холестерин (мг/дл):</label>
+                        <input type="number" id="cholesterol" value="200" step="10" min="100" max="400">
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="col">
                         <label>Давление (систолическое):</label>
-                        <input type="number" id="systolic" value="120" step="5" min="90" max="200">
+                        <input type="number" id="systolic_bp" value="120" step="5" min="80" max="200">
+                    </div>
+                    <div class="col">
+                        <label>Давление (диастолическое):</label>
+                        <input type="number" id="diastolic_bp" value="80" step="5" min="40" max="130">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col">
-                        <label>Курит:</label>
-                        <select id="smokes">
-                            <option value="false">Нет</option>
-                            <option value="true">Да</option>
-                        </select>
+                        <label>Рост (см):</label>
+                        <input type="number" id="height" value="170" step="5" min="100" max="220">
                     </div>
                     <div class="col">
-                        <label>Физическая активность:</label>
-                        <select id="activity">
-                            <option value="low">Низкая</option>
-                            <option value="medium" selected>Средняя</option>
-                            <option value="high">Высокая</option>
-                        </select>
+                        <label>Вес (кг):</label>
+                        <input type="number" id="weight" value="70" step="5" min="30" max="200">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <label>Пульс (уд/мин):</label>
+                        <input type="number" id="pulse" value="72" step="5" min="40" max="200">
+                    </div>
+                    <div class="col">
+                        <label>Глюкоза (мг/дл):</label>
+                        <input type="number" id="glucose" value="95" step="5" min="50" max="400">
                     </div>
                 </div>
 
@@ -62,22 +97,25 @@
         </div>
 
         <div id="results" style="display: none;">
-            <h2> Результаты оценки</h2>
+            <h2>📊 Результаты оценки</h2>
             
             <div class="risk-score">
-                <span class="label">Общий 10-летний риск:</span>
+                <span class="label">10-летний риск ССЗ:</span>
                 <span class="value" id="totalRisk">0%</span>
             </div>
 
+            <div class="risk-level" id="riskLevel"></div>
+
             <div class="charts">
-                <canvas id="riskChart" width="400" height="300"></canvas>
                 <canvas id="factorsChart" width="400" height="300"></canvas>
             </div>
 
             <div class="factors-list">
-                <h3> Факторы риска</h3>
+                <h3>⚠️ Факторы риска</h3>
                 <ul id="factorsUl"></ul>
             </div>
+
+            <div class="prediction-info" id="predictionInfo"></div>
         </div>
     </div>
 
