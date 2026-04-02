@@ -36,7 +36,7 @@ docker-compose up --build
 После запуска: 
 Backend API: http://localhost:8000/docs
 MLflow UI: http://localhost:5001
-
+```
 ### Способ 2: Вручную
 ### 1. Клонирование репозитория
 ```bash
