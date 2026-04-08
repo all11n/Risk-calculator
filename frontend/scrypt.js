@@ -28,8 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.disabled = true;
 
         try {
-            // ✅ ИСПРАВЛЕНО: добавил await
-            const response = await mockApiCall(formData);
+            const response = await callBackend(formData);
             displayResults(response);
             resultsDiv.style.display = 'block';
             resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -43,9 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-/**
- * Запрос к бэкенду (пока не используется)
- */
 async function callBackend(data) {
     const response = await fetch('http://localhost:8000/api/v1/predict', {
         method: 'POST',
@@ -62,27 +58,6 @@ async function callBackend(data) {
 
     return await response.json();
 }
-
-/**
- * Мок-данные для проверки фронтенда
- */
-async function mockApiCall(data) {
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    return {
-        risk_percentage: 23.5,
-        risk_probability: 0.235,
-        risk_level: "Средний",
-        factors: [
-            { name: "Возраст", value: data.age, contribution: 0.12, impact: "positive" },
-            { name: "Холестерин", value: data.cholesterol, contribution: 0.08, impact: "positive" },
-            { name: "Курение", value: data.smoking, contribution: 0.05, impact: "positive" }
-        ],
-        prediction_id: 999,
-        timestamp: new Date().toISOString()
-    };
-}
-
 /**
  * Отображение результатов
  */
