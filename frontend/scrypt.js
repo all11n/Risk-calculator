@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.disabled = true;
 
         try {
-            const response = mockApiCall(formData);
+            // ✅ ИСПРАВЛЕНО: добавил await
+            const response = await mockApiCall(formData);
             displayResults(response);
             resultsDiv.style.display = 'block';
             resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -43,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Запрос к бэкенду
+ * Запрос к бэкенду (пока не используется)
  */
 async function callBackend(data) {
     const response = await fetch('http://localhost:8000/api/v1/predict', {
@@ -63,28 +64,44 @@ async function callBackend(data) {
 }
 
 /**
+ * Мок-данные для проверки фронтенда
+ */
+async function mockApiCall(data) {
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    return {
+        risk_percentage: 23.5,
+        risk_probability: 0.235,
+        risk_level: "Средний",
+        factors: [
+            { name: "Возраст", value: data.age, contribution: 0.12, impact: "positive" },
+            { name: "Холестерин", value: data.cholesterol, contribution: 0.08, impact: "positive" },
+            { name: "Курение", value: data.smoking, contribution: 0.05, impact: "positive" }
+        ],
+        prediction_id: 999,
+        timestamp: new Date().toISOString()
+    };
+}
+
+/**
  * Отображение результатов
  */
 function displayResults(data) {
-    // Общий риск
     const riskPercent = data.risk_percentage;
     const riskLevel = data.risk_level;
     
     const totalRiskSpan = document.getElementById('totalRisk');
     totalRiskSpan.textContent = `${Math.round(riskPercent)}%`;
     
-    // Цвет риска
     totalRiskSpan.classList.remove('low', 'medium', 'high');
     if (riskPercent > 20) totalRiskSpan.classList.add('high');
     else if (riskPercent > 10) totalRiskSpan.classList.add('medium');
     else totalRiskSpan.classList.add('low');
     
-    // Уровень риска
     const riskLevelDiv = document.getElementById('riskLevel');
     riskLevelDiv.textContent = `Уровень риска: ${riskLevel}`;
     riskLevelDiv.className = `risk-level ${riskLevel.toLowerCase()}`;
     
-    // Список факторов
     const factorsUl = document.getElementById('factorsUl');
     factorsUl.innerHTML = '';
     if (data.factors && data.factors.length > 0) {
@@ -98,18 +115,16 @@ function displayResults(data) {
         factorsUl.innerHTML = '<li>Нет значимых факторов</li>';
     }
     
-    // Информация о предсказании
     const predictionInfo = document.getElementById('predictionInfo');
     if (data.prediction_id && data.timestamp) {
         predictionInfo.innerHTML = `ID расчёта: ${data.prediction_id} | ${new Date(data.timestamp).toLocaleString()}`;
     }
     
-    // Рисуем круговую диаграмму факторов
     drawFactorsChart(data.factors);
 }
 
 /**
- * Круговая диаграмма вклада факторов
+ * Круговая диаграмма факторов
  */
 function drawFactorsChart(factors) {
     const ctx = document.getElementById('factorsChart').getContext('2d');
@@ -138,22 +153,4 @@ function drawFactorsChart(factors) {
             }
         }
     });
-}
-async function mockApiCall(data) {
-    // Имитация задержки сети
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    // Возвращаем фальшивые, но реалистичные данные
-    return {
-        risk_percentage: 23.5,
-        risk_probability: 0.235,
-        risk_level: "Средний",
-        factors: [
-            { name: "Возраст", value: data.age, contribution: 0.12, impact: "positive" },
-            { name: "Холестерин", value: data.cholesterol, contribution: 0.08, impact: "positive" },
-            { name: "Курение", value: data.smoking, contribution: 0.05, impact: "positive" }
-        ],
-        prediction_id: 999,
-        timestamp: new Date().toISOString()
-    };
 }
