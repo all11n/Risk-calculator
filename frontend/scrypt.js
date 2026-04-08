@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.disabled = true;
 
         try {
-            const response = await callBackend(formData);
+            const response = mockApiCall(formData);
             displayResults(response);
             resultsDiv.style.display = 'block';
             resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -138,4 +138,22 @@ function drawFactorsChart(factors) {
             }
         }
     });
+}
+async function mockApiCall(data) {
+    // Имитация задержки сети
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    // Возвращаем фальшивые, но реалистичные данные
+    return {
+        risk_percentage: 23.5,
+        risk_probability: 0.235,
+        risk_level: "Средний",
+        factors: [
+            { name: "Возраст", value: data.age, contribution: 0.12, impact: "positive" },
+            { name: "Холестерин", value: data.cholesterol, contribution: 0.08, impact: "positive" },
+            { name: "Курение", value: data.smoking, contribution: 0.05, impact: "positive" }
+        ],
+        prediction_id: 999,
+        timestamp: new Date().toISOString()
+    };
 }
