@@ -127,8 +127,15 @@ function displayResults(data) {
  * Круговая диаграмма факторов
  */
 function drawFactorsChart(factors) {
-    const ctx = document.getElementById('factorsChart').getContext('2d');
-    if (window.factorsChart) window.factorsChart.destroy();
+    const canvas = document.getElementById('factorsChart');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    
+    // Проверяем, существует ли график и есть ли у него метод destroy
+    if (window.factorsChart && typeof window.factorsChart.destroy === 'function') {
+        window.factorsChart.destroy();
+    }
     
     if (!factors || factors.length === 0) {
         window.factorsChart = new Chart(ctx, {
