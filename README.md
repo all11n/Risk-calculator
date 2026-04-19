@@ -19,7 +19,7 @@
 | **Machine Learning** | Python, pandas, numpy, scikit-learn, CatBoost/XGBoost, multi-label classification, SHAP |
 | **MLOps / Эксперименты** | MLflow (отслеживание экспериментов, логирование моделей) |
 | **База данных** | SQLite (разработка), PostgreSQL (продакшн) |
-| **Система сборки** | pip + requirements.txt, setuptools |
+| **Система сборки** | setuptools |
 | **Документация** | Sphinx (docstrings) |
 | **Контроль версий** | Git, GitHub |
 
