@@ -1,3 +1,10 @@
+"""
+Модуль API для расчёта риска сердечно-сосудистых заболеваний.
+
+Содержит эндпоинты:
+- POST /predict - расчёт риска
+- GET /health - проверка состояния сервиса
+"""
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from datetime import datetime
@@ -16,6 +23,36 @@ async def predict_risk(
     db: Session = Depends(get_db),
     model: CVDModel = Depends(get_model)
 ):
+    """
+    Рассчитывает 10-летний риск сердечно-сосудистых заболеваний.
+
+    Принимает данные пользователя, вызывает ML-модель, сохраняет результат в БД
+    и возвращает рассчитанный риск и факторы влияния.
+
+    Args:
+        request (CVDRequest): Входные данные пользователя (возраст, пол, давление и т.д.).
+        db (Session): Сессия базы данных (внедряется через Depends).
+        model (CVDModel): Загруженная ML-модель (внедряется через Depends).
+
+    Returns:
+        CVDResponse: Объект с результатами расчёта:
+            - risk_percentage: риск в процентах
+            - risk_probability: вероятность (0-1)
+            - risk_level: уровень риска ("Низкий", "Средний", "Высокий")
+            - factors: список факторов с вкладом
+            - prediction_id: ID записи в БД
+            - timestamp: время расчёта
+
+    Raises:
+        HTTPException: Если модель недоступна или произошла ошибка предсказания.
+
+    Example:
+        >>> request = CVDRequest(age=55, sex=1, smoking=1, ...)
+        >>> response = await predict_risk(request, db, model)
+        >>> print(response.risk_percentage)
+        23.5
+    """
+    # Получаем предсказание от модели
     probability, shap_factors = model.predict(request.dict())
     risk_percentage = probability * 100
     
@@ -49,6 +86,26 @@ async def predict_risk(
 
 @router.get("/health", response_model=HealthResponse)
 async def health_check(db: Session = Depends(get_db)):
+        """
+    Проверяет состояние сервиса (health check).
+
+    Проверяет подключение к базе данных и доступность ML-модели.
+
+    Args:
+        db (Session): Сессия базы данных (внедряется через Depends).
+
+    Returns:
+        HealthResponse: Объект со статусами:
+            - status: "healthy" или "unhealthy"
+            - database: "connected" или "disconnected"
+            - model: "loaded", "unavailable" или "unknown"
+            - timestamp: время проверки
+
+    Example:
+        >>> response = await health_check(db)
+        >>> print(response.status)
+        'healthy'
+    """
     db_status = "disconnected"
     try:
         db.execute("SELECT 1")

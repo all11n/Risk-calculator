@@ -44,8 +44,14 @@ services:
     ports:
       - "5001:5000"
     volumes:
-      - ./mlflow.db:/mlflow/mlflow.db
       - ./mlartifacts:/mlflow/artifacts
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
 
 volumes:
   postgres_data:

@@ -79,9 +79,9 @@ Risk-calculator/
 │ │ ├── models/ # Модели БД
 │ │ └── ml/ # ML модель
 ├── frontend/ # HTML, CSS, JS
-│ ├── static/
-│ ├── templates/
-│ └── index.html
+│ ├── index.html
+│ ├── scrypt.js
+│ └── style.css
 ├── ml_service/ # Модели ML
 │ ├── notebooks/ # Jupyter ноутбуки
 │ ├── models/ # Сохранённые модели

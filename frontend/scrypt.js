@@ -1,8 +1,20 @@
-// Ждём загрузки DOM
+/**
+ * @fileoverview Основной скрипт для расчёта риска сердечно-сосудистых заболеваний.
+ * Собирает данные формы, отправляет на бэкенд и отображает результаты.
+ */
+
+/**
+ * Ждём полной загрузки DOM, затем вешаем обработчик на форму.
+ */
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('riskForm');
     const resultsDiv = document.getElementById('results');
 
+    /**
+     * Обработчик отправки формы.
+     * @async
+     * @param {Event} e - Событие отправки формы.
+     */
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -28,8 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.disabled = true;
 
         try {
-            // ✅ ИСПРАВЛЕНО: добавил await
-            const response = await mockApiCall(formData);
+            const response = await callBackend(formData);
             displayResults(response);
             resultsDiv.style.display = 'block';
             resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -44,7 +55,24 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Запрос к бэкенду (пока не используется)
+ * Отправляет POST-запрос на бэкенд для расчёта риска ССЗ.
+ *
+ * @async
+ * @param {Object} data - Данные пользователя из формы.
+ * @param {number} data.age - Возраст (18–100 лет).
+ * @param {number} data.sex - Пол (0 — женский, 1 — мужской).
+ * @param {number} data.smoking - Курение (0 — нет, 1 — да).
+ * @param {number} data.cholesterol - Холестерин (мг/дл, 100–400).
+ * @param {number} data.systolic_bp - Систолическое давление (80–200 мм рт. ст.).
+ * @param {number} data.diastolic_bp - Диастолическое давление (40–130 мм рт. ст.).
+ * @param {number} data.height - Рост в см (100–220).
+ * @param {number} data.weight - Вес в кг (30–200).
+ * @param {number} data.pulse - Пульс (40–200 уд/мин).
+ * @param {number} data.glucose - Глюкоза (мг/дл, 50–400).
+ * @param {number} data.diabetes - Диабет (0 — нет, 1 — да).
+ * @param {number} data.hypertension - Гипертония (0 — нет, 1 — да).
+ * @returns {Promise<Object>} Объект с результатами расчёта.
+ * @throws {Error} Если ответ сервера не OK.
  */
 async function callBackend(data) {
     const response = await fetch('http://localhost:8000/api/v1/predict', {
@@ -64,27 +92,14 @@ async function callBackend(data) {
 }
 
 /**
- * Мок-данные для проверки фронтенда
- */
-async function mockApiCall(data) {
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    return {
-        risk_percentage: 23.5,
-        risk_probability: 0.235,
-        risk_level: "Средний",
-        factors: [
-            { name: "Возраст", value: data.age, contribution: 0.12, impact: "positive" },
-            { name: "Холестерин", value: data.cholesterol, contribution: 0.08, impact: "positive" },
-            { name: "Курение", value: data.smoking, contribution: 0.05, impact: "positive" }
-        ],
-        prediction_id: 999,
-        timestamp: new Date().toISOString()
-    };
-}
-
-/**
- * Отображение результатов
+ * Отображает результаты расчёта на странице.
+ *
+ * @param {Object} data - Данные, полученные от бэкенда.
+ * @param {number} data.risk_percentage - Риск в процентах (0–100).
+ * @param {string} data.risk_level - Уровень риска ("Низкий", "Средний", "Высокий").
+ * @param {Array<Object>} data.factors - Список факторов риска.
+ * @param {number} [data.prediction_id] - ID записи в БД (опционально).
+ * @param {string} [data.timestamp] - Время расчёта (опционально).
  */
 function displayResults(data) {
     const riskPercent = data.risk_percentage;
@@ -124,7 +139,12 @@ function displayResults(data) {
 }
 
 /**
- * Круговая диаграмма факторов
+ * Рисует круговую диаграмму вклада факторов риска.
+ *
+ * @param {Array<Object>} factors - Список факторов риска.
+ * @param {string} factors[].name - Название фактора.
+ * @param {number} factors[].contribution - Вклад фактора (от 0 до 1).
+ * @param {string} factors[].impact - Влияние ("positive" или "negative").
  */
 function drawFactorsChart(factors) {
     const canvas = document.getElementById('factorsChart');
