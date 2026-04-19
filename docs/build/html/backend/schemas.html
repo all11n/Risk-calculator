@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>App Api Schemas &mdash; документация CVD Risk Calculator 1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=e35015f7"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/translations.js?v=29b1f277"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../genindex.html" />
+    <link rel="search" title="Поиск" href="../search.html" />
+    <link rel="next" title="App Api Dependencies" href="dependencies.html" />
+    <link rel="prev" title="App Api Endpoints" href="endpoints.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            CVD Risk Calculator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="endpoints.html">App Api Endpoints</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">App Api Schemas</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#app.api.schemas.CVDRequest"><code class="docutils literal notranslate"><span class="pre">CVDRequest</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.CVDRequest.age"><code class="docutils literal notranslate"><span class="pre">CVDRequest.age</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.CVDRequest.cholesterol"><code class="docutils literal notranslate"><span class="pre">CVDRequest.cholesterol</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.CVDRequest.diabetes"><code class="docutils literal notranslate"><span class="pre">CVDRequest.diabetes</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.CVDRequest.diastolic_bp"><code class="docutils literal notranslate"><span class="pre">CVDRequest.diastolic_bp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.CVDRequest.glucose"><code class="docutils literal notranslate"><span class="pre">CVDRequest.glucose</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.CVDRequest.height"><code class="docutils literal notranslate"><span class="pre">CVDRequest.height</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.CVDRequest.hypertension"><code class="docutils literal notranslate"><span class="pre">CVDRequest.hypertension</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.CVDRequest.pulse"><code class="docutils literal notranslate"><span class="pre">CVDRequest.pulse</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.CVDRequest.sex"><code class="docutils literal notranslate"><span class="pre">CVDRequest.sex</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.CVDRequest.smoking"><code class="docutils literal notranslate"><span class="pre">CVDRequest.smoking</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.CVDRequest.systolic_bp"><code class="docutils literal notranslate"><span class="pre">CVDRequest.systolic_bp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.CVDRequest.weight"><code class="docutils literal notranslate"><span class="pre">CVDRequest.weight</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#app.api.schemas.CVDResponse"><code class="docutils literal notranslate"><span class="pre">CVDResponse</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.CVDResponse.factors"><code class="docutils literal notranslate"><span class="pre">CVDResponse.factors</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.CVDResponse.prediction_id"><code class="docutils literal notranslate"><span class="pre">CVDResponse.prediction_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.CVDResponse.risk_level"><code class="docutils literal notranslate"><span class="pre">CVDResponse.risk_level</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.CVDResponse.risk_percentage"><code class="docutils literal notranslate"><span class="pre">CVDResponse.risk_percentage</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.CVDResponse.risk_probability"><code class="docutils literal notranslate"><span class="pre">CVDResponse.risk_probability</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.CVDResponse.timestamp"><code class="docutils literal notranslate"><span class="pre">CVDResponse.timestamp</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#app.api.schemas.HealthResponse"><code class="docutils literal notranslate"><span class="pre">HealthResponse</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.HealthResponse.database"><code class="docutils literal notranslate"><span class="pre">HealthResponse.database</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.HealthResponse.model"><code class="docutils literal notranslate"><span class="pre">HealthResponse.model</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.HealthResponse.status"><code class="docutils literal notranslate"><span class="pre">HealthResponse.status</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app.api.schemas.HealthResponse.timestamp"><code class="docutils literal notranslate"><span class="pre">HealthResponse.timestamp</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dependencies.html">App Api Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/predictor.html">App Ml Predictor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../frontend/overview.html">Frontend</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CVD Risk Calculator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">App Api Schemas</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/backend/schemas.rst.txt" rel="nofollow"> Просмотреть исходный код страницы</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-app.api.schemas">
+<span id="app-api-schemas"></span><h1>App Api Schemas<a class="headerlink" href="#module-app.api.schemas" title="Link to this heading"></a></h1>
+<p>Pydantic-схемы для валидации данных API.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.api.schemas.CVDRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.api.schemas.</span></span><span class="sig-name descname"><span class="pre">CVDRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.api.schemas.CVDRequest" title="Link to this definition"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Входные данные для расчёта риска.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.CVDRequest.age">
+<span class="sig-name descname"><span class="pre">age</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Ellipsis</span></em><a class="headerlink" href="#app.api.schemas.CVDRequest.age" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.CVDRequest.cholesterol">
+<span class="sig-name descname"><span class="pre">cholesterol</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Ellipsis</span></em><a class="headerlink" href="#app.api.schemas.CVDRequest.cholesterol" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.CVDRequest.diabetes">
+<span class="sig-name descname"><span class="pre">diabetes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Ellipsis</span></em><a class="headerlink" href="#app.api.schemas.CVDRequest.diabetes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.CVDRequest.diastolic_bp">
+<span class="sig-name descname"><span class="pre">diastolic_bp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Ellipsis</span></em><a class="headerlink" href="#app.api.schemas.CVDRequest.diastolic_bp" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.CVDRequest.glucose">
+<span class="sig-name descname"><span class="pre">glucose</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Ellipsis</span></em><a class="headerlink" href="#app.api.schemas.CVDRequest.glucose" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.CVDRequest.height">
+<span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Ellipsis</span></em><a class="headerlink" href="#app.api.schemas.CVDRequest.height" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.CVDRequest.hypertension">
+<span class="sig-name descname"><span class="pre">hypertension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Ellipsis</span></em><a class="headerlink" href="#app.api.schemas.CVDRequest.hypertension" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.CVDRequest.pulse">
+<span class="sig-name descname"><span class="pre">pulse</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Ellipsis</span></em><a class="headerlink" href="#app.api.schemas.CVDRequest.pulse" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.CVDRequest.sex">
+<span class="sig-name descname"><span class="pre">sex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Ellipsis</span></em><a class="headerlink" href="#app.api.schemas.CVDRequest.sex" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.CVDRequest.smoking">
+<span class="sig-name descname"><span class="pre">smoking</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Ellipsis</span></em><a class="headerlink" href="#app.api.schemas.CVDRequest.smoking" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.CVDRequest.systolic_bp">
+<span class="sig-name descname"><span class="pre">systolic_bp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Ellipsis</span></em><a class="headerlink" href="#app.api.schemas.CVDRequest.systolic_bp" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.CVDRequest.weight">
+<span class="sig-name descname"><span class="pre">weight</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Ellipsis</span></em><a class="headerlink" href="#app.api.schemas.CVDRequest.weight" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.api.schemas.CVDResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.api.schemas.</span></span><span class="sig-name descname"><span class="pre">CVDResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.api.schemas.CVDResponse" title="Link to this definition"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Результат расчёта риска.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.CVDResponse.factors">
+<span class="sig-name descname"><span class="pre">factors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#app.api.schemas.CVDResponse.factors" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.CVDResponse.prediction_id">
+<span class="sig-name descname"><span class="pre">prediction_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#app.api.schemas.CVDResponse.prediction_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.CVDResponse.risk_level">
+<span class="sig-name descname"><span class="pre">risk_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#app.api.schemas.CVDResponse.risk_level" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.CVDResponse.risk_percentage">
+<span class="sig-name descname"><span class="pre">risk_percentage</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#app.api.schemas.CVDResponse.risk_percentage" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.CVDResponse.risk_probability">
+<span class="sig-name descname"><span class="pre">risk_probability</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#app.api.schemas.CVDResponse.risk_probability" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.CVDResponse.timestamp">
+<span class="sig-name descname"><span class="pre">timestamp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span></em><a class="headerlink" href="#app.api.schemas.CVDResponse.timestamp" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.api.schemas.HealthResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.api.schemas.</span></span><span class="sig-name descname"><span class="pre">HealthResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.api.schemas.HealthResponse" title="Link to this definition"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Статус сервиса.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.HealthResponse.database">
+<span class="sig-name descname"><span class="pre">database</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#app.api.schemas.HealthResponse.database" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.HealthResponse.model">
+<span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#app.api.schemas.HealthResponse.model" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.HealthResponse.status">
+<span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#app.api.schemas.HealthResponse.status" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.api.schemas.HealthResponse.timestamp">
+<span class="sig-name descname"><span class="pre">timestamp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span></em><a class="headerlink" href="#app.api.schemas.HealthResponse.timestamp" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="endpoints.html" class="btn btn-neutral float-left" title="App Api Endpoints" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="dependencies.html" class="btn btn-neutral float-right" title="App Api Dependencies" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2026. </p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
