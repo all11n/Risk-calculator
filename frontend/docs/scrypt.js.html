@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: scrypt.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: scrypt.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// Ждём загрузки DOM
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('riskForm');
+    const resultsDiv = document.getElementById('results');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Собираем данные в формате, который ждёт бэкенд
+        const formData = {
+            age: parseInt(document.getElementById('age').value),
+            sex: parseInt(document.getElementById('sex').value),
+            smoking: parseInt(document.getElementById('smoking').value),
+            cholesterol: parseFloat(document.getElementById('cholesterol').value),
+            systolic_bp: parseInt(document.getElementById('systolic_bp').value),
+            diastolic_bp: parseInt(document.getElementById('diastolic_bp').value),
+            height: parseFloat(document.getElementById('height').value),
+            weight: parseFloat(document.getElementById('weight').value),
+            pulse: parseInt(document.getElementById('pulse').value),
+            glucose: parseFloat(document.getElementById('glucose').value),
+            diabetes: parseInt(document.getElementById('diabetes').value),
+            hypertension: parseInt(document.getElementById('hypertension').value)
+        };
+
+        const submitBtn = form.querySelector('button');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = '⏳ Расчёт...';
+        submitBtn.disabled = true;
+
+        try {
+            // ✅ ИСПРАВЛЕНО: добавил await
+            const response = await mockApiCall(formData);
+            displayResults(response);
+            resultsDiv.style.display = 'block';
+            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } catch (error) {
+            console.error('Ошибка:', error);
+            alert('Произошла ошибка при расчёте риска. Попробуйте позже.');
+        } finally {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+});
+
+/**
+ * Запрос к бэкенду (пока не используется)
+ */
+async function callBackend(data) {
+    const response = await fetch('http://localhost:8000/api/v1/predict', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Ошибка сервера ${response.status}: ${errorText}`);
+    }
+
+    return await response.json();
+}
+
+/**
+ * Мок-данные для проверки фронтенда
+ */
+async function mockApiCall(data) {
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    return {
+        risk_percentage: 23.5,
+        risk_probability: 0.235,
+        risk_level: "Средний",
+        factors: [
+            { name: "Возраст", value: data.age, contribution: 0.12, impact: "positive" },
+            { name: "Холестерин", value: data.cholesterol, contribution: 0.08, impact: "positive" },
+            { name: "Курение", value: data.smoking, contribution: 0.05, impact: "positive" }
+        ],
+        prediction_id: 999,
+        timestamp: new Date().toISOString()
+    };
+}
+
+/**
+ * Отображение результатов
+ */
+function displayResults(data) {
+    const riskPercent = data.risk_percentage;
+    const riskLevel = data.risk_level;
+    
+    const totalRiskSpan = document.getElementById('totalRisk');
+    totalRiskSpan.textContent = `${Math.round(riskPercent)}%`;
+    
+    totalRiskSpan.classList.remove('low', 'medium', 'high');
+    if (riskPercent > 20) totalRiskSpan.classList.add('high');
+    else if (riskPercent > 10) totalRiskSpan.classList.add('medium');
+    else totalRiskSpan.classList.add('low');
+    
+    const riskLevelDiv = document.getElementById('riskLevel');
+    riskLevelDiv.textContent = `Уровень риска: ${riskLevel}`;
+    riskLevelDiv.className = `risk-level ${riskLevel.toLowerCase()}`;
+    
+    const factorsUl = document.getElementById('factorsUl');
+    factorsUl.innerHTML = '';
+    if (data.factors &amp;&amp; data.factors.length > 0) {
+        data.factors.forEach(factor => {
+            const li = document.createElement('li');
+            const impactSymbol = factor.impact === 'positive' ? '🔴' : '🟢';
+            li.innerHTML = `${impactSymbol} ${factor.name}: ${factor.value} (вклад: ${(factor.contribution * 100).toFixed(1)}%)`;
+            factorsUl.appendChild(li);
+        });
+    } else {
+        factorsUl.innerHTML = '&lt;li>Нет значимых факторов&lt;/li>';
+    }
+    
+    const predictionInfo = document.getElementById('predictionInfo');
+    if (data.prediction_id &amp;&amp; data.timestamp) {
+        predictionInfo.innerHTML = `ID расчёта: ${data.prediction_id} | ${new Date(data.timestamp).toLocaleString()}`;
+    }
+    
+    drawFactorsChart(data.factors);
+}
+
+/**
+ * Круговая диаграмма факторов
+ */
+function drawFactorsChart(factors) {
+    const canvas = document.getElementById('factorsChart');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    
+    // Проверяем, существует ли график и есть ли у него метод destroy
+    if (window.factorsChart &amp;&amp; typeof window.factorsChart.destroy === 'function') {
+        window.factorsChart.destroy();
+    }
+    
+    if (!factors || factors.length === 0) {
+        window.factorsChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: { labels: ['Нет данных'], datasets: [{ data: [1], backgroundColor: ['#9ca3af'] }] }
+        });
+        return;
+    }
+    
+    const labels = factors.map(f => f.name);
+    const contributions = factors.map(f => Math.abs(f.contribution));
+    const colors = factors.map(f => f.impact === 'positive' ? '#ef4444' : '#10b981');
+    
+    window.factorsChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: { labels: labels, datasets: [{ data: contributions, backgroundColor: colors, borderWidth: 0 }] },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' },
+                tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${(ctx.raw * 100).toFixed(1)}% вклада` } }
+            }
+        }
+    });
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#callBackend">callBackend</a></li><li><a href="global.html#displayResults">displayResults</a></li><li><a href="global.html#drawFactorsChart">drawFactorsChart</a></li><li><a href="global.html#mockApiCall">mockApiCall</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Apr 17 2026 10:03:56 GMT+0300 (Москва, стандартное время)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
