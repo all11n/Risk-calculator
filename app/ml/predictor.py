@@ -11,8 +11,9 @@ import numpy as np
 from typing import Dict, Any, Tuple, List
 from app.core.config import settings
 
+
 class CVDModel:
-        """
+    """
     Класс для работы с ML-моделью сердечно-сосудистых заболеваний.
 
     Обеспечивает загрузку модели из MLflow, предобработку входных данных,
@@ -32,7 +33,7 @@ class CVDModel:
         >>> print(f"Риск: {probability * 100:.1f}%")
     """
     def __init__(self, mlflow_uri: str = None, model_name: str = None, model_stage: str = "Production"):
-                """
+        """
         Инициализирует экземпляр CVDModel.
 
         Args:
@@ -62,7 +63,7 @@ class CVDModel:
         self.load_model()
     
     def load_model(self):
-            """
+        """
         Загружает модель из MLflow.
 
         В текущей реализации используется заглушка.
@@ -155,7 +156,7 @@ class CVDModel:
         return float(probability), factors
     
     def get_model_info(self) -> Dict:
-                """
+        """
         Возвращает информацию о загруженной модели.
 
         Returns:

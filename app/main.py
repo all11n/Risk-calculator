@@ -25,6 +25,7 @@ app.add_middleware(
 
 app.include_router(router, prefix="/api/v1", tags=["predictions"])
 
+
 @app.get("/")
 async def root():
     return {
@@ -34,18 +35,23 @@ async def root():
         "health_check": "/api/v1/health"
     }
 
+
 @app.on_event("startup")
 async def startup_event():
     print("Server starting...")
-    print(f"Database: {settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}")
+    print(
+        f"Database: {settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}")
+
 
 @app.on_event("shutdown")
 async def shutdown_event():
     print("Server shutting down...")
 
+
 def main():
     import uvicorn
     uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+
 
 if __name__ == "__main__":
     main()

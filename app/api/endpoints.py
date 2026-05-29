@@ -17,6 +17,7 @@ from app.ml.predictor import CVDModel
 
 router = APIRouter()
 
+
 @router.post("/predict", response_model=CVDResponse)
 async def predict_risk(
     request: CVDRequest,
@@ -55,14 +56,14 @@ async def predict_risk(
     # Получаем предсказание от модели
     probability, shap_factors = model.predict(request.dict())
     risk_percentage = probability * 100
-    
+
     if risk_percentage < 10:
         risk_level = "Низкий"
     elif risk_percentage < 20:
         risk_level = "Средний"
     else:
         risk_level = "Высокий"
-    
+
     prediction = Prediction(
         input_data=request.dict(),
         risk_percentage=risk_percentage,
@@ -70,11 +71,11 @@ async def predict_risk(
         risk_level=risk_level,
         shap_factors=shap_factors
     )
-    
+
     db.add(prediction)
     db.commit()
     db.refresh(prediction)
-    
+
     return CVDResponse(
         risk_percentage=risk_percentage,
         risk_probability=probability,
@@ -84,9 +85,10 @@ async def predict_risk(
         timestamp=prediction.timestamp
     )
 
+
 @router.get("/health", response_model=HealthResponse)
 async def health_check(db: Session = Depends(get_db)):
-        """
+    """
     Проверяет состояние сервиса (health check).
 
     Проверяет подключение к базе данных и доступность ML-модели.

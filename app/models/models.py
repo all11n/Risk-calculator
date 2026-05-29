@@ -7,8 +7,9 @@ from sqlalchemy import Column, Integer, String, Float, DateTime, JSON
 from sqlalchemy.sql import func
 from app.core.database import Base
 
+
 class Prediction(Base):
-        """
+    """
     Модель для хранения предсказаний риска сердечно-сосудистых заболеваний.
 
     Сохраняет входные данные пользователя, результаты расчёта и временную метку.

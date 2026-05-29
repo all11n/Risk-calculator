@@ -8,6 +8,7 @@ from app.core.config import settings
 
 _model_instance = None
 
+
 async def get_model():
     """
     Возвращает экземпляр модели CVDModel (ленивая загрузка с кешированием).

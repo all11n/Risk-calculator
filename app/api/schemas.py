@@ -10,6 +10,7 @@ from pydantic import BaseModel, Field
 from typing import List, Dict, Any
 from datetime import datetime
 
+
 class CVDRequest(BaseModel):
     """
     Схема запроса для расчёта риска сердечно-сосудистых заболеваний.
@@ -59,8 +60,9 @@ class CVDRequest(BaseModel):
     diabetes: int = Field(..., ge=0, le=1)
     hypertension: int = Field(..., ge=0, le=1)
 
+
 class CVDResponse(BaseModel):
-     """
+    """
     Схема ответа с результатами расчёта риска.
 
     Attributes:
